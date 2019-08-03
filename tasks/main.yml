@@ -6,3 +6,7 @@
 
 # install rke
 - include: rke.yml
+
+# configure storage class
+- include: storage-class.yml
+  when: rke_storage_class is defined

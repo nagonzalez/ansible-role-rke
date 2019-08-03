@@ -57,3 +57,35 @@ rke_node_user_ssh_private_key: |
   +vq/5CIWxCPp0f85R4qxxQ5ihxJ0YDQT9Jpx4TMss4PSavPaBH3RXow5Ohe+bYoQ
   NE5OgEXk2wVfZczCZpigBKbKZHNYcelXtTt/nP3rsCuGcM4h53s=
   -----END RSA PRIVATE KEY-----
+
+# rke_storage_class:
+#   apiVersion: storage.k8s.io/v1
+#   kind: StorageClass
+#   metadata:
+#     annotations:
+#       storageclass.beta.kubernetes.io/is-default-class: "true"
+#       storageclass.kubernetes.io/is-default-class: "true"
+#     name: vmware-thin
+#   parameters:
+#     datastore: vsanDatastore
+#     diskformat: thin
+#     fstype: ext4
+#   provisioner: kubernetes.io/vsphere-volume
+#   reclaimPolicy: Delete
+#   volumeBindingMode: Immediate
+
+# rke_cloud_provider:
+#   name: vsphere
+#   vsphereCloudProvider:
+#     global:
+#       insecure-flag: true
+#       user: administrator@vsphere.local
+#       password: changeme
+#       datacenters: garage
+#     virtual_center:
+#       vcenter.noeg.wtf: {}
+#     workspace:
+#       server: vcenter.noeg.wtf
+#       datacenter: garage
+#       folder: rancher
+#       default-datastore: vsanDatastore
