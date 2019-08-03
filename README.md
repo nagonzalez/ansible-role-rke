@@ -1,3 +1,1 @@
-Ansible module to install RKE requirements.
-
-CentOS only for now.
+Ansible role to install RKE

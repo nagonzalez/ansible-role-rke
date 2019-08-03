@@ -1,0 +1,46 @@
+---
+- name: create directory to hold rke configs
+  file:
+    state: directory
+    path: "{{ rke_config_dir }}"
+    owner: "{{ rke_node_user }}"
+    group: "{{ rke_node_user }}"
+    mode: 0700
+
+- name: copy rke cluster config file
+  template:
+    src: "{{ rke_config_file }}.j2"
+    dest: "{{ rke_config_dir }}/{{ rke_config_file }}"
+    owner: "{{ rke_node_user }}"
+    group: "{{ rke_node_user }}"
+    mode: 0600
+  register: l_rke_cluster_yml
+
+- name: kick off rke installer
+  become: true
+  become_user: "{{ rke_node_user }}"
+  command: "rke up --config ./{{ rke_config_file }}"
+  args:
+    chdir: "{{ rke_config_dir }}/"
+  changed_when: l_rke_cluster_yml.changed
+
+- name: ensure .kube directory exists
+  file:
+    state: directory
+    dest: "{{ item }}"
+    owner: "{{ rke_node_user }}"
+    group: "{{ rke_node_user }}"
+  loop:
+    - "/home/{{ rke_node_user }}/.kube"
+    - "/root/.kube"
+
+- name: symlink ~/.kube/config to rke kube config file
+  file:
+    state: link
+    src: "{{ rke_config_dir }}/kube_config_{{ rke_config_file }}"
+    dest: "{{ item }}"
+    owner: "{{ rke_node_user }}"
+    group: "{{ rke_node_user }}"
+  loop:
+    - "/home/{{ rke_node_user }}/.kube/config"
+    - "/root/.kube/config"

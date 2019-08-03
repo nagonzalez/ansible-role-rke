@@ -20,6 +20,13 @@ platforms:
 provisioner:
   name: ansible
   log: true
+  inventory:
+    host_vars:
+      rke:
+        rke_nodes:
+          - address: 172.28.128.3
+            user: vagrant
+            role: [controlplane, etcd, worker]
   lint:
     name: ansible-lint
     options:

@@ -1,0 +1,16 @@
+# RKE node definitions
+nodes:
+{{ rke_nodes | to_nice_yaml(indent=2) | trim | indent(2, first=True)  }}
+
+# RKE services
+services:
+{{ rke_services | to_nice_yaml(indent=2) | trim | indent(2, first=True)  }}
+
+# Set the name of the Kubernetes cluster  
+cluster_name: {{ rke_cluster_name }}
+
+{% if rke_cloud_provider is defined %}
+# cloud provider
+cloud_provider:
+{{ rke_cloud_provider | to_nice_yaml(indent=2) | trim | indent(2, first=True)  }}
+{% endif %}

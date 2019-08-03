@@ -1,27 +1,28 @@
 ---
-- name: Set authorized key for rke user
-  authorized_key:
-    user: "{{ rke_user }}"
-    state: present
-    key: "{{ rke_user_ssh_public_key }}"
+- name: ensure rke user .ssh directory exists
+  file:
+    state: directory
+    path: "/home/{{ rke_node_user }}/.ssh"
+    mode: 0700
+    owner: "{{ rke_node_user }}"
+    group: "{{ rke_node_user }}"
 
-- name: Remove swapfile from /etc/fstab
-  mount:
-    name: swap
-    fstype: swap
-    state: absent
+- name: add ssh private key
+  copy:
+    dest: "/home/{{ rke_node_user }}/.ssh/id_rsa"
+    owner: "{{ rke_node_user }}"
+    group: "{{ rke_node_user }}"
+    mode: 0600
+    content: "{{ rke_node_user_ssh_private_key }}"
 
-- name: gather facts
-  setup:
+- name: download rke
+  get_url:
+    url: "https://github.com/rancher/rke/releases/download/v{{ rke_version }}/rke_linux-amd64"
+    dest: /usr/local/bin/rke
+    mode: 0755
 
-- name: Disable swap
-  command: swapoff -a
-  when: ansible_swaptotal_mb > 0
-
-- name: set net.bridge.bridge-nf-call-iptables
-  sysctl:
-    name: net.bridge.bridge-nf-call-iptables
-    value: 1
-    sysctl_set: yes
-    state: present
-    reload: yes
+- name: download kubectl
+  get_url:
+    url: "https://storage.googleapis.com/kubernetes-release/release/v{{ kubectl_version }}/bin/linux/amd64/kubectl"
+    dest: /sbin/kubectl
+    mode: 0755
