@@ -18,11 +18,13 @@
 - name: download rke
   get_url:
     url: "https://github.com/rancher/rke/releases/download/v{{ rke_version }}/rke_linux-amd64"
+    checksum: "{{ rke_checksum }}"
     dest: /usr/local/bin/rke
     mode: 0755
 
 - name: download kubectl
   get_url:
     url: "https://storage.googleapis.com/kubernetes-release/release/v{{ kubectl_version }}/bin/linux/amd64/kubectl"
+    checksum: "{{ kubectl_checksum }}"
     dest: /sbin/kubectl
     mode: 0755
