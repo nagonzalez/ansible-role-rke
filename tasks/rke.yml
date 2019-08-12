@@ -19,7 +19,7 @@
 - name: kick off rke installer
   become: true
   become_user: "{{ rke_node_user }}"
-  command: "rke up --config ./{{ rke_config_file }}"
+  command: "/usr/local/bin/rke up --config ./{{ rke_config_file }}"
   args:
     chdir: "{{ rke_config_dir }}/"
   changed_when: l_rke_cluster_yml.changed
