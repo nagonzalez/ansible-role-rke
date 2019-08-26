@@ -1,12 +1,12 @@
 ---
 # defaults file for ansible-role-rke
 # kubectl binary version
-kubectl_version: 1.15.2
-kubectl_checksum: sha512:11111fcf808dbe9e5518cdca705fc11fb29eeea7b40e888f2b50c1f2c55a26d0e165ec5a203f037e7fd4db740d5d31ccb2b0d95e6d7fa5979a7815bfcb7421bd
+kubectl_version: 1.15.3
+kubectl_checksum: sha512:2c561c68440fce61515434f4695d504e47b040789a89613f3171a2426805fff59368aa3500fc55396671e5df25a6bfdc587b0c772bf5b4f541dae659a46223b3.
 
 # rke binary version
-rke_version: 0.2.7
-rke_checksum: sha256:7c05727aa3d6f8c4b5f60b057f1fe7883af48d5a778e3b1668f178dda84883ee
+rke_version: 0.2.8
+rke_checksum: sha256:0a2edad2d17f4734e4aa5bc005d94c760dc3b8f7519564b46723e8860dbe415a
 
 # directory to hold rke configs
 rke_config_dir: /etc/rke-config
